@@ -1,0 +1,17 @@
+# Estándares de ingeniería · Faro Riesgo
+
+Vigentes desde el diseño del 19 de noviembre de 2026. La unidad de publicación es un lote completo de cuentas con la misma fecha de corte y una versión congelada del modelo.
+
+| Práctica | Decisión | Comprobación de cierre |
+|---|---|---|
+| Arquitectura | Separar adaptador XLS, transformaciones puras, entrenamiento, evaluación, scoring y persistencia. La CLI compone estos módulos. Usar composición de sklearn para compartir transformaciones en entrenamiento e inferencia. | Tests de módulos, scoring desde archivo y consulta PostgreSQL. |
+| Configuración y dependencias | Python 3.12, lock, ejecución CPU con un hilo por biblioteca, semilla 2026. PostgreSQL por variables estándar PG*. Directorio local explícito para modelos y tracking. | Instalación aislada, pip check, registro de versiones y repetición de predicciones. |
+| Secretos y seguridad | Credenciales de PostgreSQL solo en el entorno. Ningún servicio público por defecto. SQL parametrizado. Verificar hash de los artefactos locales de confianza antes de deserializar. Separar datos de auditoría del lote de scoring. | Inspección del contenido de Git, tests de contrato, alteración y rollback. |
+| Licencia y datos | Comprobar SHA-256 del ZIP UCI, hoja, columnas, IDs y tipos. Distinguir dato de origen, derivado y fixture sintético en la procedencia y en las claves. Conservar y contar códigos sin documentación. | Perfil de 30.000 cuentas, atribución y tests de rechazo. |
+| Contratos | Versionar esquemas y sus huellas. Validar campos de entrada y los contratos publicados. No aceptar un lote parcial. El snapshot completo es inmutable. | Entrada incompatible, score no finito, replay, colisión e integración SQL. |
+| Reproducibilidad científica | Split estratificado 60/20/20 por cuenta. Cinco folds internos en train. ID, etiqueta y atributos demográficos fuera de predictores. Calibrar en train. Congelar la política antes de consultar test. | IDs persistidos, hash de features, revisión del pipeline y manifiesto de selección. |
+| Política | Capacidad principal 5%, sensibilidad 2% y 10%, desempate estable. Comparar constante, regla de mora, logística y boosting. Para promover exigir validación elegible, diferencia AP con límite inferior pareado positivo en test y Brier no peor que logística. | Bootstrap pareado de 1.000 muestras, calibración, auditoría de grupos con umbral 100. Registrar también un resultado hold. |
+| Pruebas y CI | Probar unidades, selección, integridad e integración con PostgreSQL real. Fixture pequeño para E2E. Repetir scoring del artefacto congelado y ejercitar bloqueos. | Ruff, pytest/JUnit, consulta de la cola, CI Linux y demo funcional. Distinguir comprobación local de CI remoto. |
+| Observabilidad | Registrar etapa, ejecución, resultado y conteos. Monitorizar esquema, faltantes, rango y cambio de distribución. Separar disponibilidad de etiquetas de resultados. | Lote normal, cambio sembrado y esquema roto. Reporte de seguimiento antes y después de maduración simulada. |
+| Entrega y despliegue | Publicación transaccional con clave por namespace y corte. Generar informe offline y recursos visuales desde resultados medidos. Usar Compose o PostgreSQL nativo. | Rollback/reintento, pruebas desde CLI y apertura de informe. |
+| Mantenimiento | Documentar migración, rollback, límites, diccionario, procedencia y controles de promoción. Cambiar la política tras ver test exige evaluación externa. | README, arquitectura, model card, runbook, caso de estudio y evidencias versionadas. |
