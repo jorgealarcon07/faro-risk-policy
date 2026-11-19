@@ -24,15 +24,22 @@ def file_hash(path):
 
 
 def encode(value):
-    return json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False,
-                      indent=2, default=lambda x: x.item() if isinstance(x, np.generic) else str(x))
+    return json.dumps(
+        value,
+        sort_keys=True,
+        ensure_ascii=False,
+        allow_nan=False,
+        indent=2,
+        default=lambda x: x.item() if isinstance(x, np.generic) else str(x),
+    )
 
 
 def put(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile(dir=path.parent, delete=False, mode="w",
-                                     encoding="utf-8", suffix=".tmp") as tmp:
+    with tempfile.NamedTemporaryFile(
+        dir=path.parent, delete=False, mode="w", encoding="utf-8", suffix=".tmp"
+    ) as tmp:
         tmp.write(encode(value) + "\n")
     os.replace(tmp.name, path)
 

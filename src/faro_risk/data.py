@@ -63,23 +63,38 @@ def partitions(df):
     ids = df.set_index("ID")[TARGET].sort_index()
     train, rest = train_test_split(ids.index, stratify=ids, test_size=0.4, random_state=SEED)
     valid, test = train_test_split(rest, stratify=ids.loc[rest], test_size=0.5, random_state=SEED)
-    return pd.concat([pd.DataFrame({"ID": sorted(group), "split": name}) for name, group in
-                      [("train", train), ("validation", valid), ("test", test)]], ignore_index=True)
+    return pd.concat(
+        [
+            pd.DataFrame({"ID": sorted(group), "split": name})
+            for name, group in [("train", train), ("validation", valid), ("test", test)]
+        ],
+        ignore_index=True,
+    )
 
 
 def profile(df):
-    domains = {**dict.fromkeys(PAY, STATUS_CODES), "SEX": {1, 2},
-               "EDUCATION": {1, 2, 3, 4}, "MARRIAGE": {1, 2, 3}}
-    return {"rows": len(df), "missing": df.isna().sum().to_dict(),
-            "unique_ids": df.ID.nunique(), "negative_bill_cells": int((df[BILL] < 0).sum().sum()),
-            "unknown_codes": {c: {str(k): int(n) for k, n in df[c].value_counts().items()
-                                  if k not in known} for c, known in domains.items()},
-            "range": {c: [int(df[c].min()), int(df[c].max())] for c in RAW + AUDIT}}
+    domains = {
+        **dict.fromkeys(PAY, STATUS_CODES),
+        "SEX": {1, 2},
+        "EDUCATION": {1, 2, 3, 4},
+        "MARRIAGE": {1, 2, 3},
+    }
+    return {
+        "rows": len(df),
+        "missing": df.isna().sum().to_dict(),
+        "unique_ids": df.ID.nunique(),
+        "negative_bill_cells": int((df[BILL] < 0).sum().sum()),
+        "unknown_codes": {
+            c: {str(k): int(n) for k, n in df[c].value_counts().items() if k not in known}
+            for c, known in domains.items()
+        },
+        "range": {c: [int(df[c].min()), int(df[c].max())] for c in RAW + AUDIT},
+    }
 
 
 def synthetic(n=500):
     rng = np.random.default_rng(SEED)
-    df = pd.DataFrame({"ID": np.arange(1, n+1), "LIMIT_BAL": rng.integers(1, 60, n)*1000})
+    df = pd.DataFrame({"ID": np.arange(1, n + 1), "LIMIT_BAL": rng.integers(1, 60, n) * 1000})
     for c in PAY:
         df[c] = rng.choice([-2, -1, 0, 1, 2, 3], n)
     for c in BILL:
@@ -87,7 +102,7 @@ def synthetic(n=500):
     for c in PAID:
         df[c] = rng.integers(0, 5000, n)
     for c, high in zip(AUDIT, [3, 5, 4, 78], strict=True):
-        df[c] = rng.integers(21 if c=="AGE" else 1, high, n)
+        df[c] = rng.integers(21 if c == "AGE" else 1, high, n)
     df[TARGET] = (rng.random(n) < (0.13 + 0.34 * (df.PAY_0 >= 2))).astype(int)
     return df[COLUMNS]
 

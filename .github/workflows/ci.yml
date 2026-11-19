@@ -1,0 +1,36 @@
+name: Check risk policy
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: faro_risk
+          POSTGRES_PASSWORD: ci_ephemeral_only
+          POSTGRES_DB: risk_ci
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 15
+    env:
+      PGHOST: 127.0.0.1
+      PGUSER: faro_risk
+      PGDATABASE: risk_ci
+      PGPASSWORD: ci_ephemeral_only
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.lock
+      - run: python -m pip install --no-build-isolation --no-deps -e .
+      - run: python -m pip check
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: faro-risk validate
+      - run: pytest -q --junitxml=local/tests.xml
+      - run: faro-risk demo

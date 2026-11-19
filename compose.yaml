@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: faro_risk
+      POSTGRES_USER: faro_risk
+      POSTGRES_PASSWORD: ${PGPASSWORD:?Define PGPASSWORD locally}
+    volumes:
+      - riskdb:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U faro_risk"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  app:
+    build: .
+    environment:
+      PGHOST: db
+      PGDATABASE: faro_risk
+      PGUSER: faro_risk
+      PGPASSWORD: ${PGPASSWORD:?Define PGPASSWORD locally}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - riskoutput:/app/local
+volumes:
+  riskdb:
+  riskoutput:
