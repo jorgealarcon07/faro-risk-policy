@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from psycopg.errors import InsufficientPrivilege
 
 from faro_risk import batch
 from faro_risk.common import AS_OF, REAL, SIM, file_hash, put, read
@@ -34,6 +35,8 @@ def run():
     cli("validate")
     cli("demo", "--out", args.out / "demo")
     cli("export-holdout", "--zip", args.zip, "--out", args.out / "holdout.csv")
+    cli("audit-import", "--zip", args.zip)
+    cli("audit-import", "--zip", args.zip)
 
     def score(output):
         cli(
@@ -64,6 +67,26 @@ def run():
             (SIM,),
         ).fetchone()[0]
         version = conn.execute("SHOW server_version").fetchone()[0]
+        conn.execute(Path("scripts/access.sql").read_text(encoding="utf8"))
+        with conn.transaction():
+            conn.execute("SET LOCAL ROLE faro_risk_reader")
+            reader_rows = conn.execute(
+                "SELECT count(*) FROM faro_risk.review_queue WHERE namespace=%s", (REAL,)
+            ).fetchone()[0]
+            try:
+                with conn.transaction():
+                    conn.execute(
+                        "SELECT account_id FROM faro_risk_audit.historical_accounts LIMIT 1"
+                    )
+            except InsufficientPrivilege:
+                private_denied = True
+            else:
+                raise RuntimeError("El lector obtuvo acceso a las variables privadas")
+        with conn.transaction():
+            conn.execute("SET LOCAL ROLE faro_risk_auditor")
+            audit_count = conn.execute(
+                "SELECT count(*) FROM faro_risk_audit.historical_accounts"
+            ).fetchone()[0]
     delta = max(abs(expected[i] - s) for i, s in persisted)
     cli("queue", "--namespace", REAL, "--as-of", AS_OF, "--out", args.out / "queue.csv")
     queue = pd.read_csv(args.out / "queue.csv")
@@ -80,6 +103,8 @@ def run():
         and len(queue) == policy["k"]
         and len(persisted) == len(expected)
         and blocked == 0
+        and reader_rows == len(queue)
+        and audit_count == 30_000
         and list(queue.account_id)
         == [i for i, _, _ in sorted(rows, key=lambda r: (-r[1], r[2]))[: len(queue)]]
         and np.array_equal(queue.position, np.arange(1, len(queue) + 1))
@@ -89,6 +114,11 @@ def run():
         args.out / "acceptance.json",
         {
             "postgresql": version,
+            "access_check": {
+                "reader_queue_rows": reader_rows,
+                "reader_denied_audit": private_denied,
+                "auditor_private_accounts": audit_count,
+            },
             "namespace": REAL,
             "as_of": AS_OF,
             "feature_snapshot_id": snapshot,

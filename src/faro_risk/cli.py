@@ -109,6 +109,8 @@ def main(argv=None):
 
     c = subs.add_parser("download")
     directory(c, "zip", "local/uci.zip")
+    c = subs.add_parser("audit-import")
+    directory(c, "zip", "local/uci.zip")
     c = subs.add_parser("study")
     directory(c, "zip", "local/uci.zip")
     directory(c, "release", "local/release")
@@ -135,6 +137,11 @@ def main(argv=None):
     try:
         if args.cmd == "download":
             download(args.zip)
+        elif args.cmd == "audit-import":
+            from .audit_store import import_cohort
+
+            with batch.fetch_connection() as conn:
+                log("audit_import", **import_cohort(conn, args.zip))
         elif args.cmd == "study":
             from .study import study
 

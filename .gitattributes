@@ -1,5 +1,6 @@
 * text=auto eol=lf
 reports/release/** -text
+reports/queue.csv -text
 *.joblib binary
 *.png binary
 *.gz binary

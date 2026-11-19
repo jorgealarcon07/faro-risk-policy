@@ -1,3 +1,4 @@
+from base64 import b64encode
 from html import escape
 from pathlib import Path
 
@@ -32,8 +33,12 @@ def table(headers, rows):
 
 
 def render(folder):
+    from .figures import calibration as plot_calibration
+
     folder = Path(folder)
     report = read(folder / "policy_report.json")
+    figure = folder / "calibration.png"
+    plot_calibration(report, figure)
     follow = read(folder / "monitor.json")
     metrics, boot, verdict = report["metrics"], report["bootstrap"], report["decision"]
     active = verdict["active"]
@@ -161,11 +166,12 @@ def render(folder):
         "comparison": comparison,
         "capacity": capacity,
         "calibration": calibration,
+        "figure": b64encode(figure.read_bytes()).decode("ascii"),
         "audit": audit,
         "gates": gate_table,
         "alert": escape(", ".join(follow["synthetic_limit_shift"]["alerts"])),
-        "case_amount": f"{report['scenario']['default_selected_balance_times_lgd']:,.0f}".replace(
-            ",", "."
+        "case_amount": f"{report['scenario']['default_selected_balance_times_lgd']:,.1f}".translate(
+            str.maketrans(".,", ",.")
         ),
     }
     from string import Template
