@@ -1,0 +1,13 @@
+{
+  "max_absolute_validation_probability_difference": {
+    "boost": 0.0,
+    "logistic": 0.0
+  },
+  "selected_parameters_identical": true,
+  "split_identical": true,
+  "test_outcomes_used_for_refit_or_comparison": false,
+  "tolerance": 1e-12,
+  "train": 18000,
+  "train_features_identical": true,
+  "validation": 6000
+}

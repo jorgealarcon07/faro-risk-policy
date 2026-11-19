@@ -1,0 +1,11 @@
+{
+  "host_memory_gib": 15.113025665283203,
+  "logical_cpus_host": 12,
+  "machine": "AMD64",
+  "peak_rss_mib_sampled": 280.30078125,
+  "platform": "Windows",
+  "process": "study only",
+  "sample_interval_seconds": 0.1,
+  "seconds": 22.416240000000016,
+  "threads_per_pool": 1
+}

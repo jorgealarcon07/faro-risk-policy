@@ -1,0 +1,7 @@
+This historical risk team can review three hundred of six thousand accounts. The active model identified two hundred twenty-seven observed defaults in that queue.
+
+Boosting passed the prespecified tests for average precision and probability error. Logistic regression found five more defaults in the first three hundred reviews. The simple delinquency rule found two hundred fifteen.
+
+Changing the review capacity changes the decision. At two percent, the queue captured ninety-five defaults. At ten percent, it captured four hundred twenty-nine. These are historical outcomes, not defaults prevented.
+
+Age, sex, education, and marital status are excluded from training. The audit checks group sizes and uncertainty. This Taiwanese cohort from two thousand five provides no prospective validation for Colombia.

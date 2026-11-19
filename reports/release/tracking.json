@@ -1,0 +1,32 @@
+{
+  "artifacts": [
+    "boost.joblib",
+    "manifest.json",
+    "monitor.json",
+    "policy_report.json",
+    "release.json",
+    "selection_frozen.json"
+  ],
+  "children": [
+    "249ccf614d4540eea286bb86f8a2e98b",
+    "ec2ea4056fdf44efb78eb97f212f812d",
+    "19e3435e0bf04c94b3fad44521d3772d",
+    "5978bb647546458a8485c281fd848657",
+    "c83d049d46ed4de5a3a2b9a562456c8c"
+  ],
+  "experiment_id": "1",
+  "metrics": {
+    "boost_ap": 0.5615463885849691,
+    "constant_ap": 0.22116666666666668,
+    "logistic_ap": 0.5426901615962298,
+    "rule_ap": 0.4580214550179254
+  },
+  "params": {
+    "capacity_pct": "5",
+    "data": "56c885f84457f6680f8438f02bfcdac9579323d8a94465ee5f26e32baa727602",
+    "decision": "promote",
+    "seed": "2026"
+  },
+  "parent": "24a355b159b14eb9955419bad14913c1",
+  "status": "FINISHED"
+}

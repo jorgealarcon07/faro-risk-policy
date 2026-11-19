@@ -1,0 +1,111 @@
+{
+  "data_kind": "synthetic",
+  "first_account": {
+    "account_id": 212,
+    "as_of": "2026-01-31",
+    "data_kind": "synthetic",
+    "feature_snapshot_id": "a15d263bfedc873dc778adfb947855e6e8e70c89e4606d4c6f687cfcc11e0bfe",
+    "model_version": "boost-f3559198b5ca4841",
+    "namespace": "credit_simulated_v1",
+    "position": 1,
+    "score": 0.7950840085310387
+  },
+  "initial": {
+    "as_of": "2026-01-31",
+    "data_kind": "synthetic",
+    "feature_snapshot_id": "a15d263bfedc873dc778adfb947855e6e8e70c89e4606d4c6f687cfcc11e0bfe",
+    "model_version": "boost-f3559198b5ca4841",
+    "monitor": {
+      "alerts": [],
+      "ks": {
+        "BILL_AMT1": 0.021944444444444433,
+        "LIMIT_BAL": 0.07616666666666666,
+        "PAY_0": 0.011999999999999997,
+        "PAY_AMT1": 0.047944444444444456
+      },
+      "missing_fraction": {
+        "BILL_AMT1": 0.0,
+        "BILL_AMT2": 0.0,
+        "BILL_AMT3": 0.0,
+        "BILL_AMT4": 0.0,
+        "BILL_AMT5": 0.0,
+        "BILL_AMT6": 0.0,
+        "LIMIT_BAL": 0.0,
+        "PAY_0": 0.0,
+        "PAY_2": 0.0,
+        "PAY_3": 0.0,
+        "PAY_4": 0.0,
+        "PAY_5": 0.0,
+        "PAY_6": 0.0,
+        "PAY_AMT1": 0.0,
+        "PAY_AMT2": 0.0,
+        "PAY_AMT3": 0.0,
+        "PAY_AMT4": 0.0,
+        "PAY_AMT5": 0.0,
+        "PAY_AMT6": 0.0
+      },
+      "n": 500,
+      "score_range": [
+        0.06096746627919804,
+        0.7950840085310387
+      ],
+      "state": "publish"
+    },
+    "namespace": "credit_simulated_v1",
+    "rows": 500,
+    "run_id": "24a355b159b14eb9955419bad14913c1",
+    "status": "replay"
+  },
+  "product": "faro-risk-policy",
+  "queue_rows": 25,
+  "repeat": "replay",
+  "schema_blocked": "Contrato de entrada incompatible: se requieren ID y 19 campos históricos",
+  "shift": {
+    "as_of": "2026-02-28",
+    "data_kind": "synthetic",
+    "feature_snapshot_id": "224e698e97cd6e272eaeb249cbd2809389f3041b2d870102c698c57bffe3993b",
+    "model_version": "boost-f3559198b5ca4841",
+    "monitor": {
+      "alerts": [
+        "shift:LIMIT_BAL"
+      ],
+      "ks": {
+        "BILL_AMT1": 0.021944444444444433,
+        "LIMIT_BAL": 0.8786111111111111,
+        "PAY_0": 0.011999999999999997,
+        "PAY_AMT1": 0.047944444444444456
+      },
+      "missing_fraction": {
+        "BILL_AMT1": 0.0,
+        "BILL_AMT2": 0.0,
+        "BILL_AMT3": 0.0,
+        "BILL_AMT4": 0.0,
+        "BILL_AMT5": 0.0,
+        "BILL_AMT6": 0.0,
+        "LIMIT_BAL": 0.0,
+        "PAY_0": 0.0,
+        "PAY_2": 0.0,
+        "PAY_3": 0.0,
+        "PAY_4": 0.0,
+        "PAY_5": 0.0,
+        "PAY_6": 0.0,
+        "PAY_AMT1": 0.0,
+        "PAY_AMT2": 0.0,
+        "PAY_AMT3": 0.0,
+        "PAY_AMT4": 0.0,
+        "PAY_AMT5": 0.0,
+        "PAY_AMT6": 0.0
+      },
+      "n": 500,
+      "score_range": [
+        0.05140457029651053,
+        0.7756982112580656
+      ],
+      "state": "suspend"
+    },
+    "namespace": "credit_simulated_v1",
+    "rows": 500,
+    "run_id": "24a355b159b14eb9955419bad14913c1",
+    "status": "suspended"
+  }
+}

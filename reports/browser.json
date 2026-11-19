@@ -1,0 +1,12 @@
+{
+  "browser": "158.0.8127.42",
+  "mobile_horizontal_overflow": false,
+  "js_errors": [],
+  "checked": [
+    "navigation",
+    "4 baselines/models",
+    "10 calibration bands",
+    "audit",
+    "shift alert"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "access_check": {
+    "auditor_private_accounts": 30000,
+    "reader_denied_audit": true,
+    "reader_queue_rows": 300
+  },
+  "as_of": "2005-09-30",
+  "blocked_snapshots_persisted": 0,
+  "concurrent_submissions": [
+    "published",
+    "replay"
+  ],
+  "feature_snapshot_id": "0eb185399193e351b5f4851ce69b1df1f7a67993d4ccfb0040ab689cf06404f3",
+  "first_queue_record": {
+    "account_id": 17240,
+    "as_of": "2005-09-30",
+    "data_kind": "real_public",
+    "feature_snapshot_id": "0eb185399193e351b5f4851ce69b1df1f7a67993d4ccfb0040ab689cf06404f3",
+    "model_version": "boost-f3559198b5ca4841",
+    "namespace": "uci_tw_credit_2005",
+    "position": 1,
+    "score": 0.8795311224857117
+  },
+  "hits": 227,
+  "max_absolute_score_replay_difference": 0.0,
+  "namespace": "uci_tw_credit_2005",
+  "postgresql": "17.12",
+  "queue": 300,
+  "queue_csv_sha256": "729dcf973a98badc33f3b75a36059a2db52cd0a2b04955d30a27c00ff2664b8d",
+  "rows": 6000,
+  "sql_rank_matches_python": true,
+  "tolerance": 1e-12
+}

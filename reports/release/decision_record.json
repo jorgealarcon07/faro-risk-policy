@@ -1,0 +1,40 @@
+{
+  "accounts": 6000,
+  "active": "boost",
+  "as_of": "2005-09-30",
+  "capacity_pct": 5,
+  "checks": {
+    "ap_lower_bound_positive": true,
+    "brier_no_worse": true,
+    "higher_ap": true,
+    "validation_eligible": true
+  },
+  "delta_ap_ci95": [
+    0.004515614733906184,
+    0.03223543232417874
+  ],
+  "evidence": {
+    "manifest.json": "74fcf548f0db6baa777bc1ee3dae4ada5ce423d1012f71fc815c26bae3e64242",
+    "policy_report.json": "c3202d0ae460a8a744b1f1b555f584e9bc214fcee4bb505599280b38d807bc9a",
+    "selection_frozen.json": "d7aaf16354c2620337496d4cbef9de13052502f7964d8e7258543e43077c4c8c"
+  },
+  "hits_at_capacity": 227,
+  "positives": 1327,
+  "reason": [
+    "Elegible en validación",
+    "AP mayor que logística",
+    "Límite inferior de la diferencia de AP superior a cero",
+    "Brier igual o menor que logística"
+  ],
+  "review_role": "responsable de riesgo simulado",
+  "review_slots": 300,
+  "run_id": "24a355b159b14eb9955419bad14913c1",
+  "scenario_assumptions": {
+    "balance_proxy": "max(BILL_AMT1,0)",
+    "currency": "TWD",
+    "default_selected_balance_times_lgd": 7128184.5,
+    "lgd_assumption": 0.5,
+    "selected_balance": 18281544.0
+  },
+  "status": "promote"
+}

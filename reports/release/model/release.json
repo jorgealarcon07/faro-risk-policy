@@ -1,0 +1,9 @@
+{
+  "active": "boost",
+  "model_version": "boost-f3559198b5ca4841",
+  "reference_sha256": "245a8640b24f2ea91123391bc8da32c663458bfaca881c553bb1a9142b184efe",
+  "run_id": "24a355b159b14eb9955419bad14913c1",
+  "schema_version": "1.0",
+  "sha256": "f3559198b5ca484104c435fee519993eaa0069168208b4e47ae3dbeef27e989f",
+  "sklearn": "1.7.2"
+}
