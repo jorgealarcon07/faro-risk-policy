@@ -1,0 +1,12 @@
+.venv/
+.runtime/
+local/
+__pycache__/
+*.egg-info/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+*.log
+mlruns/
+mlflow.db

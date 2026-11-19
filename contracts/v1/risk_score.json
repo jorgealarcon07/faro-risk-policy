@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "namespace": {
+      "enum": [
+        "uci_tw_credit_2005",
+        "credit_simulated_v1"
+      ]
+    },
+    "as_of": {
+      "type": "string",
+      "format": "date"
+    },
+    "account_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "model_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "feature_snapshot_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "data_kind": {
+      "enum": [
+        "synthetic",
+        "real_public"
+      ]
+    }
+  },
+  "required": [
+    "namespace",
+    "as_of",
+    "account_id",
+    "score",
+    "model_version",
+    "feature_snapshot_id",
+    "data_kind"
+  ],
+  "additionalProperties": false
+}

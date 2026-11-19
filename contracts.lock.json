@@ -1,0 +1,8 @@
+{
+  "version": "1.0",
+  "sha256": {
+    "decision_record.json": "d571189dc7ca0866637813264c45d70d66c06c3ff7ec6a36c37464e85471e1c4",
+    "risk_score.json": "a3609c611259babda9d3364f04b2fa2686088e7a030cf2722f124d1b263776d2",
+    "run_manifest.json": "03b83497102b5bfd0c958ee1536f9b1485125eb4992bc0b154e052ee65baed98"
+  }
+}

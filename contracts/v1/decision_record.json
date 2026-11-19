@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "hold",
+        "promote"
+      ]
+    },
+    "active": {
+      "enum": [
+        "logistic",
+        "boost"
+      ]
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "validation_eligible": {
+          "type": "boolean"
+        },
+        "higher_ap": {
+          "type": "boolean"
+        },
+        "ap_lower_bound_positive": {
+          "type": "boolean"
+        },
+        "brier_no_worse": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "validation_eligible",
+        "higher_ap",
+        "ap_lower_bound_positive",
+        "brier_no_worse"
+      ],
+      "additionalProperties": false
+    },
+    "review_role": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "status",
+    "active",
+    "checks",
+    "review_role"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "git_sha": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contract_version": {
+      "const": "1.0"
+    },
+    "dataset_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_namespace": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data_kind": {
+      "const": "real_public"
+    },
+    "seed": {
+      "const": 2026
+    },
+    "as_of": {
+      "const": "2005-09-30"
+    },
+    "rows": {
+      "const": 30000
+    },
+    "outputs": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    }
+  },
+  "required": [
+    "run_id",
+    "git_sha",
+    "contract_version",
+    "dataset_sha256",
+    "source_namespace",
+    "data_kind",
+    "seed",
+    "as_of",
+    "rows",
+    "outputs"
+  ],
+  "additionalProperties": true
+}
