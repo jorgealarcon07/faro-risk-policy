@@ -1,7 +1,7 @@
 from html import escape
 from pathlib import Path
 
-from .common import read
+from .common import file_hash, put, read
 
 NAMES = {
     "logistic": "Regresión logística",
@@ -120,6 +120,31 @@ def render(folder):
         ["Condición predefinida", "Resultado"],
         [[label, "Cumple" if verdict["checks"][k] else "Falla"] for k, label in gates.items()],
     )
+    manifest = read(folder / "manifest.json")
+    put(
+        folder / "decision_record.json",
+        {
+            **verdict,
+            "run_id": manifest["run_id"],
+            "as_of": manifest["as_of"],
+            "reason": [
+                label
+                for key, label in gates.items()
+                if verdict["checks"][key] == (active == "boost")
+            ],
+            "accounts": report["n"],
+            "positives": report["positives"],
+            "capacity_pct": 5,
+            "hits_at_capacity": main["hits"],
+            "review_slots": main["k"],
+            "delta_ap_ci95": boot["ap_boost_minus_logistic"],
+            "scenario_assumptions": report["scenario"],
+            "evidence": {
+                name: file_hash(folder / name)
+                for name in ["selection_frozen.json", "policy_report.json", "manifest.json"]
+            },
+        },
+    )
     values = {
         "main": NAMES[active],
         "verdict": "Promover el candidato" if active == "boost" else "Mantener la logística",
@@ -128,6 +153,8 @@ def render(folder):
         "n": report["n"],
         "pos": report["positives"],
         "rule": rule["hits"],
+        "lr_hits": metrics["logistic"]["capacity"]["5"]["hits"],
+        "lift_ci": ci(boot["capacity"][active]["5"]["lift_vs_rule"]),
         "delta": fmt(metrics["boost"]["ap"] - metrics["logistic"]["ap"]),
         "ci": ci(boot["ap_boost_minus_logistic"]),
         "recall": fmt(main["recall"], "pct"),

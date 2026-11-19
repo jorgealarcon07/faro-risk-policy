@@ -47,10 +47,12 @@ def inspect(frame, scores, baseline):
 
 def delayed_labels(ids, probabilities, labels, days):
     # Validate full one-to-one linkage before measuring matured outcomes.
-    if set(ids) != set(labels) or len(set(ids)) != len(ids):
+    if len(set(ids)) != len(ids) or len(probabilities) != len(ids) or days < 0:
         raise ValueError("Claves de etiqueta incompatibles")
     if days < 30:
         return {"simulated": True, "days": days, "state": "awaiting_labels", "available": 0}
+    if set(ids) != set(labels):
+        raise ValueError("Claves de etiqueta incompatibles")
     y = np.array([labels[i] for i in ids])
     if not np.isin(y, [0, 1]).all():
         raise ValueError("Etiqueta no binaria")

@@ -34,15 +34,26 @@ def validate(root, release):
         target = (release / name).resolve()
         if not target.is_relative_to(release.resolve()) or file_hash(target) != expected:
             raise ValueError("Artefacto con huella incompatible")
-    validate_contract(root, "decision_record", read(release / "policy_report.json")["decision"])
+    decision = read(release / "decision_record.json")
+    validate_contract(root, "decision_record", decision)
+    if decision["run_id"] != manifest["run_id"] or any(
+        file_hash(release / name) != decision["evidence"][name]
+        for name in ("selection_frozen.json", "policy_report.json", "manifest.json")
+    ):
+        raise ValueError("La decisión corresponde a otra ejecución")
     batch.load_release(release / "model")
     log("validated", files=len(manifest["outputs"]), run_id=manifest["run_id"])
 
 
 def demo(model_dir, out, root):
     out.mkdir(parents=True, exist_ok=True)
-    if any(out.iterdir()) and not (out / "demo.json").exists():
+    marker = out / "demo.json"
+    if any(out.iterdir()) and (
+        not marker.is_file() or read(marker).get("product") != "faro-risk-policy"
+    ):
         raise ValueError("Use una carpeta de demo nueva o previamente completada")
+    if not marker.exists():
+        put(marker, {"product": "faro-risk-policy", "status": "started"})
     _, _, ref = batch.load_release(model_dir)
     fixture = batch.demo_batch(ref)
     fixture.to_csv(out / "synthetic.csv", index=False)

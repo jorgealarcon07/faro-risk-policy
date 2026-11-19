@@ -17,6 +17,7 @@ SQL = Path(__file__).with_name("sql") / "v1.sql"
 
 def initialize(conn):
     with conn.transaction():
+        conn.execute("SELECT pg_advisory_xact_lock(hashtextextended('faro_risk.schema.v1',0))")
         conn.execute(SQL.read_text(encoding="utf-8"))
 
 

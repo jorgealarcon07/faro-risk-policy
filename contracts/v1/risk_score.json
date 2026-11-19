@@ -45,5 +45,33 @@
     "feature_snapshot_id",
     "data_kind"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "namespace": {
+            "const": "uci_tw_credit_2005"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "data_kind": {
+            "const": "real_public"
+          },
+          "as_of": {
+            "const": "2005-09-30"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "data_kind": {
+            "const": "synthetic"
+          }
+        }
+      }
+    }
+  ]
 }

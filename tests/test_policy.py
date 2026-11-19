@@ -86,6 +86,7 @@ def test_drift_missing_and_score_limits():
 def test_unmatured_labels_do_not_become_negatives():
     args = ([1, 2], [0.1, 0.8], {2: 1, 1: 0})
     assert "brier" not in delayed_labels(*args, 7)
+    assert delayed_labels([1, 2], [0.1, 0.8], {}, 7)["available"] == 0
     assert delayed_labels(*args, 30)["brier"] == pytest.approx(0.025)
     with pytest.raises(ValueError):
         delayed_labels([1, 2], [0.1, 0.8], {2: 1}, 30)
