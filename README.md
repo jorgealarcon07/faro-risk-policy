@@ -1,8 +1,24 @@
-# Faro · Priorización de cuentas para revisión
+# Priorización de cuentas
 
-Una mesa de riesgo dispone de 300 revisiones para 6.000 cuentas. En el ensayo histórico de Faro, el boosting calibrado concentró **227 impagos**, la regresión logística **232** y la regla del último atraso **215**. El boosting superó el criterio global de promoción fijado antes del test. La elección operativa dependería también de cuánto pese el rendimiento en las primeras 300 posiciones. [Informe interactivo offline](reports/release/policy_report.html) · [Caso de estudio](CASO_DE_ESTUDIO.md) · [Recorrido narrado en inglés](assets/web/walkthrough.mp4)
+**Data Science** · Datos históricos · Taiwán, 2005 · [Portafolio de Jorge Alarcón](https://github.com/jorgealarcon07#proyectos)
 
-**English brief.** A reproducible batch system for a capacity-constrained review team. It separates ranking quality, probability calibration and observed defaults at a fixed workload. The historical holdout contains 1,327 defaults. PostgreSQL publishes one immutable snapshot and exposes a ranked queue. The experiment studies a Taiwanese cohort from 2005. [Model card](model_card.md) · [Machine-readable results](reports/release/policy_report.json)
+![Python](assets/stack/python.svg) ![scikit-learn](assets/stack/scikitlearn.svg) ![MLflow](assets/stack/mlflow.svg) ![SQL · PostgreSQL](assets/stack/postgresql.svg)
+
+## Si solo podemos revisar 300 cuentas, ¿por cuáles empezamos?
+
+Construí una cola de revisión y comparé una regla de atraso con dos modelos. El equipo de riesgo puede ver qué cambia al dedicar más o menos revisiones. El boosting ordenó mejor el conjunto completo y cumplió el criterio de selección fijado de antemano. Con el cupo concreto de 300, la regresión logística reunió más impagos observados. Esa diferencia importa al dimensionar el equipo. La muestra es histórica y de una sola cohorte.
+
+**Resultado medido.** Entre las primeras 300 de 6.000 cuentas de prueba hubo 232 impagos históricos con regresión logística, 227 con boosting y 215 con la regla de atraso.
+
+[Abrir el informe en el navegador](https://jorgealarcon07.github.io/jorgealarcon07/revision-de-riesgo/) · [Leer el caso de estudio](CASO_DE_ESTUDIO.md) · [Ver la arquitectura](docs/ARQUITECTURA.md)
+
+![Comparación de los modelos al variar la cantidad de cuentas que se pueden revisar](assets/web/capacidad.png)
+
+## Cómo se construyó
+
+Separé las 30.000 cuentas por etapas de entrenamiento, selección y prueba. Con scikit-learn ajusté los modelos y calibré sus probabilidades. MLflow conserva los experimentos y PostgreSQL publica una versión de la cola que se puede auditar.
+
+[Comparación y límites del modelo](model_card.md) · [Decisión y versiones](reports/release/decision_record.json) · [Experimentos de MLflow](reports/release/tracking.json)
 
 ## Revisar en cinco minutos
 
