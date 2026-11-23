@@ -14,7 +14,7 @@ The production-style batch takes a CSV without labels or demographic fields. It 
 
 ## What the test showed
 
-The held-out set contained **6,000 accounts** and **1,327 observed defaults**. At 300 reviews, logistic regression surfaced **232** defaults, calibrated boosting **227** and the overdue-payment rule **215**. Boosting improved average precision across the full ranking and slightly improved the Brier score, so the predeclared global criterion produced `promote`. Its estimated advantage over the rule at 300 reviews was uncertain. [Metrics and intervals](reports/release/policy_report.json) · [Open interactive report (Spanish)](https://jorgealarcon07.github.io/jorgealarcon07/revision-de-riesgo/)
+The held-out set contained **6,000 accounts** and **1,327 observed defaults**. At 300 reviews, logistic regression surfaced **232** defaults, calibrated boosting **227** and the overdue-payment rule **215**. Boosting improved average precision across the full ranking and slightly improved the Brier score, so the predeclared global criterion produced `promote`. Its estimated advantage over the rule at 300 reviews was uncertain. [Metrics and intervals](reports/release/policy_report.json) · [Open interactive report](https://jorgealarcon07.github.io/jorgealarcon07/revision-de-riesgo/index.en.html)
 
 | Review capacity | Accounts reviewed | Observed defaults surfaced by boosting | Share of all observed defaults |
 |---|---:|---:|---:|

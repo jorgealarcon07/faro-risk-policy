@@ -1,21 +1,22 @@
 """Render reliability diagrams from the saved evaluation without scoring the holdout."""
 
-from pathlib import Path
-
 import matplotlib as mpl
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 
+from .report_language import labels
 
-def calibration(report, output):
+
+def calibration(report, output, language="es"):
+    text = labels(language)
     with mpl.rc_context({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False}):
         fig = Figure(figsize=(8.6, 3.8), dpi=150, layout="constrained", facecolor="white")
         FigureCanvasAgg(fig)
         curve, counts = fig.subplots(1, 2, gridspec_kw={"width_ratios": [1.2, 1]})
-        curve.plot([0, 1], [0, 1], "--", color="#8e9e99", lw=1, label="Calibración ideal")
+        curve.plot([0, 1], [0, 1], "--", color="#8e9e99", lw=1, label=text["py_ideal"])
         for name, label, color, marker in [
-            ("logistic", "Logística", "#ad632e", "s"),
-            ("boost", "Boosting", "#086a62", "o"),
+            ("logistic", text["py_figure_logistic"], "#ad632e", "s"),
+            ("boost", text["py_figure_boost"], "#086a62", "o"),
         ]:
             nonempty = [b for b in report["metrics"][name]["calibration"] if b["n"]]
             curve.plot(
@@ -40,9 +41,9 @@ def calibration(report, output):
         curve.set(
             xlim=(0, 1),
             ylim=(0, 1),
-            xlabel="Probabilidad media estimada",
-            ylabel="Fracción con impago",
-            title="Calibración en test",
+            xlabel=text["py_figure_predicted"],
+            ylabel=text["py_figure_observed"],
+            title=text["py_figure_validation"],
         )
         curve.legend(loc="upper left", fontsize=8, frameon=False)
         bins = report["metrics"][report["decision"]["active"]]["calibration"]
@@ -54,11 +55,11 @@ def calibration(report, output):
         )
         counts.set(
             xlim=(0, 1),
-            xlabel="Banda del score",
-            ylabel="Cuentas",
-            title="Soporte del modelo activo",
+            xlabel=text["py_figure_band"],
+            ylabel=text["py_accounts"],
+            title=text["py_figure_active"],
         )
         for ax in [curve, counts]:
             ax.grid(axis="y", alpha=0.14)
             ax.set_axisbelow(True)
-        fig.savefig(Path(output), format="png")
+        fig.savefig(output, format="png")

@@ -12,6 +12,8 @@ Construí una cola de revisión y comparé una regla de atraso con dos modelos. 
 
 [Abrir el informe en el navegador](https://jorgealarcon07.github.io/jorgealarcon07/revision-de-riesgo/) · [Leer el caso de estudio](CASO_DE_ESTUDIO.md) · [Ver la arquitectura](docs/ARQUITECTURA.md)
 
+El informe y la gráfica de calibración están disponibles en inglés. `faro-risk report --release reports/release` genera `policy_report.html` y `policy_report.en.html` a partir de la evaluación guardada.
+
 ![Comparación de los modelos al variar la cantidad de cuentas que se pueden revisar](assets/web/capacidad.png)
 
 ## Cómo se construyó

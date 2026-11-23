@@ -10,7 +10,7 @@ I built a ranked queue for a fictional team that reviews accounts manually. I co
 
 **Measured result.** In the first 300 of 6,000 historical test accounts, logistic regression surfaced 232 observed defaults, calibrated gradient boosting surfaced 227 and the overdue-payment rule surfaced 215. Boosting achieved the best average precision across the full ranking. The historical study measures which defaults each method would have surfaced for review.
 
-[Case study](CASE_STUDY.md) · [Open interactive report (Spanish)](https://jorgealarcon07.github.io/jorgealarcon07/revision-de-riesgo/) · [Architecture (Spanish)](docs/ARQUITECTURA.md)
+[Case study](CASE_STUDY.md) · [Open interactive report](https://jorgealarcon07.github.io/jorgealarcon07/revision-de-riesgo/index.en.html) · [Architecture (Spanish)](docs/ARQUITECTURA.md)
 
 ![Observed defaults by review capacity in the Spanish report](assets/web/capacidad.png)
 
@@ -35,3 +35,5 @@ faro-risk demo --out local/demo
 ```
 
 Inspect `local/demo/demo.json` for the published queue, replay and blocked input. The [full guide in Spanish](README.es.md) covers the self-contained PostgreSQL runner and the historical study.
+
+Both report languages share the same evidence files. The [saved English report](reports/release/policy_report.en.html) also opens from a local checkout.
