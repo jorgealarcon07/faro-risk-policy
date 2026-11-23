@@ -1,5 +1,7 @@
 # Caso de estudio · 300 revisiones para 6.000 cuentas
 
+[English](CASE_STUDY.md)
+
 **Decisión.** Una jefa de operaciones debe repartir una cola diaria y explicar por qué una cuenta entró. El responsable de riesgo, por su parte, necesita decidir si promueve una nueva versión. Ambas decisiones comparten datos, pero sus métricas pueden favorecer modelos distintos. [Informe de la decisión](reports/release/policy_report.html)
 
 ## Del dato a la cola
